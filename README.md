@@ -6,5 +6,5 @@ Data Visualization & Communication
 Exploratory Data Mining 
 
 # Skills 
-Git
+* Git
 R
