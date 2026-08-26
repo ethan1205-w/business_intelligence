@@ -5,6 +5,6 @@ Data Acquisition & Transformation
 Data Visualization & Communication
 Exploratory Data Mining 
 
-Skills 
+# Skills 
 Git
 R
