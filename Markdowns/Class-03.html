@@ -1594,9 +1594,30 @@ border-radius: 0px;
 </div>
 
 
+<div id="cincy-crash-data" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Cincy crash data</h1>
+<pre class="r"><code>crashes_per_day = 30125 / 365
+crashes_per_day</code></pre>
+<pre><code>## [1] 82.53425</code></pre>
+<pre class="r"><code>crashes_by_day = c(2020, 2241, 2327, 2285,2380, 1866, 1664)
+names(crashes_by_day) = c(&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;,&quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;)
+crashes_by_day</code></pre>
+<pre><code>##  Mon  Tue  Wed  Thu  Fri  Sat  Sun 
+## 2020 2241 2327 2285 2380 1866 1664</code></pre>
+<div id="type-of-crashes_by_day" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> type of
+<code>crashes_by_day</code></h2>
+<pre class="r"><code>typeof(crashes_by_day)</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<pre class="r"><code>crashes_by_day_int = c(2020L, 2241L, 2327L, 2285L,2380L, 1866L, 1664L)
+names(crashes_by_day_int) = c(&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;,&quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;)
+crashes_by_day_int</code></pre>
+<pre><code>##  Mon  Tue  Wed  Thu  Fri  Sat  Sun 
+## 2020 2241 2327 2285 2380 1866 1664</code></pre>
+</div>
+</div>
 
-
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNsYXNzIDAzIC0gUiBCYXNpY3MiDQphdXRob3I6ICJFdGhhbiBXaWxsaWFtcyINCmRhdGU6ICIyMDI2LTA4LTMxIg0Kb3V0cHV0OiANCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZmxvYXQ6IHRydWUgDQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlIA0KICAgIGNvZGVfZm9sZGluZzogc2hvdyANCiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlIA0KLS0tDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNsYXNzIDAzIC0gUiBCYXNpY3MiDQphdXRob3I6ICJFdGhhbiBXaWxsaWFtcyINCmRhdGU6ICIyMDI2LTA4LTMxIg0Kb3V0cHV0OiANCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZmxvYXQ6IHRydWUgDQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlIA0KICAgIGNvZGVfZm9sZGluZzogc2hvdyANCiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlIA0KLS0tDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0KYGBgDQoNCiMgQ2luY3kgY3Jhc2ggZGF0YSANCg0KYGBge3IgY2luY3lfY3Jhc2hlc30NCg0KY3Jhc2hlc19wZXJfZGF5ID0gMzAxMjUgLyAzNjUNCmNyYXNoZXNfcGVyX2RheQ0KDQpjcmFzaGVzX2J5X2RheSA9IGMoMjAyMCwgMjI0MSwgMjMyNywgMjI4NSwyMzgwLCAxODY2LCAxNjY0KQ0KbmFtZXMoY3Jhc2hlc19ieV9kYXkpID0gYygiTW9uIiwgIlR1ZSIsICJXZWQiLCAiVGh1IiwiRnJpIiwgIlNhdCIsICJTdW4iKQ0KY3Jhc2hlc19ieV9kYXkNCmBgYA0KDQojIyB0eXBlIG9mIGBjcmFzaGVzX2J5X2RheWANCg0KYGBge3IgdHlwZW9mX3ZlY30NCg0KdHlwZW9mKGNyYXNoZXNfYnlfZGF5KQ0KDQpjcmFzaGVzX2J5X2RheV9pbnQgPSBjKDIwMjBMLCAyMjQxTCwgMjMyN0wsIDIyODVMLDIzODBMLCAxODY2TCwgMTY2NEwpDQpuYW1lcyhjcmFzaGVzX2J5X2RheV9pbnQpID0gYygiTW9uIiwgIlR1ZSIsICJXZWQiLCAiVGh1IiwiRnJpIiwgIlNhdCIsICJTdW4iKQ0KY3Jhc2hlc19ieV9kYXlfaW50DQoNCg0KYGBgDQoNCg==</div>
 
 
 </div>
