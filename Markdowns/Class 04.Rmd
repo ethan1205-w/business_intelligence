@@ -1,0 +1,99 @@
+---
+title: 'Class 04: Date Structures and Data Importing in R'
+author: "Ethan Williams"
+date: "2026-09-02"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_download: true
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data Frames
+
+```{r df}
+crashes_by_day = c(2020, 2241, 2327, 2285, 2380, 1866, 1664)
+names(crashes_by_day) = c("Mon", "Tue", "Wed", "Thu",
+                          "Fri", "Sat", "Sun")
+crashes_df = tibble::tibble(
+  day     = names(crashes_by_day),
+  crashes = crashes_by_day,
+  busy    = crashes_by_day > 2000
+)
+crashes_df
+
+
+dplyr::glimpse(crashes_df)# equivalent of str() but prints neater
+```
+
+```{r}
+
+
+job = list(
+  title   = "Research Data Scientist, Magic Eye",
+  company = "Google",
+  salary  = list(min = 147000, max = 210000)
+)
+str(job)
+```
+
+<!-- 1. The company name. -->
+
+company_name =  job$company
+
+<!-- 2. The maximum salary. -->
+
+maximum_salary = job$salary$max
+
+<!-- 3. The maximum salary again, using only [[ ]]. -->
+
+maximum_salary = job[[3]][[2]]
+
+<!-- 4. The names of the elements in job. -->
+
+names(job)
+
+
+# sub-setting (a.k.a getting a subset of the object's data for analysis)
+
+## vectors
+
+- You can subset by position (i.e., a number) or by name if it is a named vector; 
+- You can also pass a vector (e.g., logical condition, 2:4, or c(,)) for sub-setting the vector
+
+```{r}
+crashes_by_day = c(2020, 2241, 2327, 2285, 2380, 1866, 1664)
+names(crashes_by_day) = c("Mon", "Tue", "Wed", "Thu",
+                          "Fri", "Sat", "Sun")
+crashes_by_day[2:4]# you can give consecutive numbers
+crashes_by_day[c('Mon', 'Fri')]# crashes_by_day [c(1, 5)]
+
+sum(crashes_by_day > 2300)
+
+```
+
+# ohio jobs
+
+```{r}
+oh_jobs = readr::read_csv("M:/ISA 401/IHLIDXUSOH.csv")
+
+oh_jobs_base_r = read.csv(
+  file = "M:/ISA 401/IHLIDXUSOH.csv"
+)
+
+
+dplyr::glimpse(oh_jobs)
+dplyr::glimpse(oh_jobs_base_r)
+```
+
+
+
+
+
+
