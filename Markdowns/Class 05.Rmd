@@ -1,0 +1,86 @@
+---
+title: "Class 5"
+author: "Ethan Williams"
+date: "2026-09-09"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    numbered_Sections: true
+    code_download: true
+    code_folding: show
+    theme: simplex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Game 01: Sub-setting Lists 
+
+```{r game01}
+campus = jsonlite::fromJSON(
+  "https://isa401-find-your-seat.vercel.app/campus.json")
+
+names(campus) # Shows the named elements within a list (or vector) or the cols in a data frame
+
+fsb = campus$Farmer # Saving the named farmer list in fsb
+# equivalent campus[['Farmer']] by name or campus[[5]] by position  
+fsb$code
+
+fsb[[8]][[3]][[4]]
+
+fsb[[8]][[3]][[3]]# Rooms
+
+
+```
+
+
+
+## Reading the excel file
+
+```{r occupations}
+
+occupation = readxl::read_excel(
+  path = "../data/occupation.xlsx",
+  sheet = 5, # sheet = "table 1.4"
+  skip = 1
+)
+
+
+# - when you subset in R drops these specific things
+# Given that they are three, I put them in a vector
+# Notice the "," after the parentheses
+# nothing after the comma which means all columns 
+# instead of that space --> 1:7 
+
+occupation = occupation[-c(32, 33, 34), ]
+
+# alternatively
+occupation = occupation [1:31, ]
+```
+
+## Read JSON Data
+
+```{r}
+json_url = "https://data.cincinnati-oh.gov/resource/rvmt-pkmq.json?$limit=100"
+
+crashes_json = jsonlite::fromJSON(json_url)
+dplyr::glimpse(crashes_json)
+```
+
+
+## Game 02
+```{r}
+logins = readr::read_csv("https://isa401-import-heist.vercel.app/api/stage1")
+
+log = jsonlite::fromJSON("https://isa401-import-heist.vercel.app/api/stage2?key=smithj31&seat=R1-3&s=B")
+
+
+jsonlite::fromJSON("https://isa401-import-heist.vercel.app/api/finish?code=6&seat=R1-3&s=B")
+log$events
+
+
+```
+
+
