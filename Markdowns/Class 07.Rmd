@@ -61,16 +61,101 @@ jobs |>
   dplyr::summarise(
     postings = dplyr::n(),
     remote_share = mean(remote)
-    # remind me to show you how to compute remote_share diff in nect class 
   )
 
 
+# Among full-time postings, which states have the highest remote share. 
 
+# Based on the vote in class, I will deviate from the answer in the slide 
+# By showing the combination of category and state -- this will still give you the answer you want 
+
+jobs |>
+  dplyr::group_by(category, location_state) |>
+  dplyr::summarise(
+    postings = dplyr::n(),
+    remote_share = mean(remote) |> round(digits = 2)
+    )|>
+  dplyr::arrange(dplyr::desc(remote_share)) |>
+  na.omit()# to drop the location_state == NA and any other rows that contatin NA
 
 
 
 
 ```
+
+
+
+
+
+## Airbnb
+
+```{r}
+con = DBI::dbConnect(RSQLite::SQLite(), "../data/midwest_airbnb.db")
+listings = DBI::dbReadTable(con, "listings") |>
+  tibble::as_tibble()
+DBI::dbDisconnect(con)
+dplyr::glimpse(listings)
+
+#1. How many listings per city?
+## If the answer is purley based off last class, I can group by city and then count the number of listings in each city
+
+listings |> dplyr::group_by(city) |> dplyr::summarise(count = dplyr::n())
+# alternatively, the short cut for the code above
+listings |> dplyr::count(city) # count does group by and then n()
+
+# the other option is to simply county the number of times each city occurred in the col city
+
+table(listings$city) # returns a named vector vs above we get a data.frame/tibble
+
+
+# 2. For entire homes (room_type == "Entire home/apt") that sleep four or more, what is the median price in each city?
+
+listings |>
+  dplyr:: filter(
+    room_type == "Entire home/apt" & accommodates >=4
+  ) |>
+  dplyr::group_by(city) |>
+  dplyr::summarise(
+    median_price = median(price)
+    )
+
+#3. Add price_per_person = price / accommodates. Which three listings are cheapest per person? Believe them?
+
+listings |>
+  dplyr:: mutate(
+    price_per_person = price /accommodates  
+  ) |>
+  dplyr::select(city, host_name, name, price, accommodates, price_per_person) |>
+  dplyr::arrange(
+    price_per_person
+    )|>
+  tail(3)
+
+#4. Which five host_names have the most listings?
+# host ids are unique host names are not 
+
+listings |> dplyr::count(host_name, sort = T) 
+
+listings |> dplyr::count(host_name, host_id, sort = T)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
