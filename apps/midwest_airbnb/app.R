@@ -17,6 +17,7 @@ qc = querychat::querychat(
   extra_instructions = "data/extra_instructions.md"
 )
 
+qc$app()   # <-- add this line
 
 
 
