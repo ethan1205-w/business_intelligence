@@ -20,4 +20,3 @@ qc = querychat::querychat(
 
 
 
-shiny::runApp(qc$app(), host = "0.0.0.0", port = as.numeric(Sys.getenv("PORT", 3838)))
