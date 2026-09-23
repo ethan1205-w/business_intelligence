@@ -18,3 +18,6 @@ qc = querychat::querychat(
 )
 
 usethis::use_git_ignore(".Renviron")
+
+library(usethis)
+
