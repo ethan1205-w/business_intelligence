@@ -17,7 +17,6 @@ qc <- querychat::querychat(
   extra_instructions = "data/extra_instructions.md"
 )
 
-qc$app()   # <-- last line: this is what returns the shiny.appobj
 
 
 
