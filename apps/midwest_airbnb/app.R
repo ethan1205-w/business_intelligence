@@ -1,5 +1,6 @@
 # ISA 401 Midwest Airbnb Chat: ask questions, get SQL, a table, or a chart back
 library(querychat)
+library(shiny)
 
 con = DBI::dbConnect(RSQLite::SQLite(), "data/midwest_airbnb.db")
 
@@ -17,7 +18,6 @@ qc = querychat::querychat(
   extra_instructions = "data/extra_instructions.md"
 )
 
-qc$app()   # <-- add this line
-
+qc$app_obj()
 
 
