@@ -23,3 +23,76 @@ httr2::request("https://data.cincinnati-oh.gov/resource/rvmt-pkmq.json") |>
   jsonlite::fromJSON() -> cincy_crashes
 ```
 
+
+```{r}
+Sys.getenv("FRED_API_KEY")   # shows the key, so: Console only
+usethis::use_git_ignore(".Renviron")
+```
+
+## Fred API Key 
+
+```{r}
+httr2::request("https://api.stlouisfed.org/fred/series/observations") |>
+  httr2::req_url_query(
+    series_id = "IHLIDXUSOH",
+    api_key = Sys.getenv("FRED_API_KEY"),
+    file_type = "json"
+  ) |>
+    httr2::req_perform() |>
+    httr2::resp_body_string() |>
+    jsonlite::fromJSON() -> ohio_jobs
+
+jobs_df <- ohio_jobs$observations
+ohio_jobs$observations
+ohio_jobs[[13]]
+
+# To get data from Sept 1, 2026
+
+# Get all the data and filter the rows that you want 
+dplyr::glimpse(jobs_df)
+
+jobs_df |>
+  dplyr::mutate(
+    date = lubridate::ymd(date)
+  ) |>
+  # list of jobs that are greater than sept 1 2026
+  dplyr::filter(date >= '2026-09-01') -> jobs_df_mod
+  
+httr2::request("https://api.stlouisfed.org/fred/series/observations") |>
+  httr2::req_url_query(
+    series_id = "IHLIDXUSOH",
+    api_key = Sys.getenv("FRED_API_KEY"),
+    file_type = "json",
+    observation_start = "2026-09-01"
+  ) |>
+    httr2::req_perform() |>
+    httr2::resp_body_string() |>
+    jsonlite::fromJSON() -> ohio_jobs_sep_2026
+
+ohio_jobs_sep_2026_df = ohio_jobs_sep_2026$observations
+```
+
+## USA Jobs API
+
+```{r}
+httr2::request("https://data.usajobs.gov/api/search") |>
+  httr2::req_url_query(Keyword = "Data Analyst", ResultsPerPage = 500) |>
+  httr2::req_headers(
+    Host = "data.usajobs.gov",
+    "User-Agent" = "will1688@miamioh.edu",
+    "Authorization-Key" = Sys.getenv("USAJOBS_API_KEY")
+  ) |>
+  httr2::req_perform() |>
+  httr2::resp_body_string() |>
+  jsonlite::fromJSON(flatten = TRUE) -> usa_jobs_list
+
+
+usa_jobs_df <- usa_jobs_list$SearchResult$SearchResultItems
+
+
+
+```
+
+
+
+
