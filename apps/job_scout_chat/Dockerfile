@@ -20,5 +20,6 @@ WORKDIR /app
 COPY app.R app.R
 COPY data/ data/
 
+# Render sets PORT at runtime; Hugging Face and local Docker use 7860
 EXPOSE 7860
-CMD ["R", "-q", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 7860)"]
+CMD ["R", "-q", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = as.integer(Sys.getenv('PORT', '7860')))"]
