@@ -17,7 +17,5 @@ qc = querychat::querychat(
   extra_instructions = "data/extra_instructions.md"
 )
 
-usethis::use_git_ignore(".Renviron")
 
-library(usethis)
 
