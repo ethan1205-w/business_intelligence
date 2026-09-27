@@ -1,0 +1,19 @@
+# Airbnb Market Analysis
+
+I looked at Airbnb listings in Chicago, Columbus, and the Twin Cities using
+`data/midwest_airbnb_extended.db`. All the code is in `airbnb_analysis.Rmd`,
+and `airbnb_analysis.html` is the knitted version if you just want to read it.
+
+## Five things I found
+
+- 198 hosts run ten or more listings. In Columbus they hold 37.1 percent of everything on the site, against 17.2 percent in the Twin Cities, so Columbus is much more of a professional landlord market than a spare-bedroom one.
+- In Chicago, the top 10 percent of listings pull in 40.7 percent of the estimated revenue. There are thousands of places to stay, but the money is going to a few hundred of them.
+- If you are a family of four, North Linden is the cheapest decent neighbourhood in Columbus at a median of 32.55 dollars per person per night. Near North/University runs 43.88, so you are paying about a quarter more to be closer in.
+- The Twin Cities get 7,399 reviews in August and only 3,119 in February, a 2.37 to 1 swing. Hosting there is a summer business, and anyone budgeting on August income is going to have a rough winter.
+- 456 listings never show up in the availability table at all, 267 of them in Chicago. They quietly fall out of every occupancy number in this report, so those numbers describe the listings with a 2026 calendar, not the whole market.
+
+## Things to keep in mind about this data
+
+- When a night is not available, it could be booked or it could be blocked off by the host. There is no way to tell which.
+- Inside Airbnb counts reviews as a stand-in for completed stays, so the monthly numbers are a measure of demand, not actual bookings.
+- The 2026 calendar files do not include nightly prices, so every price here comes from the listings table.
