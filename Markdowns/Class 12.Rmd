@@ -1,0 +1,90 @@
+---
+title: "Class 12"
+date: "2026-10-05"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_download: true
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## continuing with the plane crash info example
+```{r}
+year = 2025
+
+crash_url = paste0('https://www.planecrashinfo.com/', year, '/', year, '.htm')
+
+crash_page <- rvest::read_html(crash_url, encoding = "ISO-8859-1")
+
+# This should now print without the error
+crash_page
+
+# How many <table> elements are on the page?
+crash_tables <- crash_page |>
+  rvest::html_elements("table") |>
+  rvest::html_table()
+
+# From a cleaning perspective:
+# step 1: Translate into a DF
+# step 2: Replace the current headers with row 1 and then delete row 1
+# step 3: Convert date into a date column instead of chr
+# step 4: More complex cleaning to split multiple information within a cell into separate columns 
+# (Outside of the scope of today's class -- feel free to try AI or regular expressions if you are in 414)
+
+# Back to our pepper shaker analogy
+
+crash_df = crash_tables[[1]] # Subsetting a list
+
+colnames(crash_df) = crash_df[1, ]
+crash_df = crash_df[-1, ]
+
+# Convert date column into a date type object
+
+crash_df = crash_df |> 
+  dplyr::mutate(Date = lubridate::dmy(Date))
+dplyr::glimpse(crash_df)
+```
+
+## Game
+
+```{r}
+page = rvest::read_html("https://isa401-salvage.vercel.app/registry?start=1")
+classes = page |>
+  rvest::html_elements(".Dreadnought") |>
+  rvest::html_text2()
+length(classes)   # check this first: one per card
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+base = "https://isa401-salvage.vercel.app"
+starts = seq(from = 1, to = 351, by = 50)
+pages = vector("list", length(starts))
+for (i in seq_along(starts)) {
+  pg = rvest::read_html(paste0(base, "/registry?start=", starts[i]))
+  pages[[i]] = data.frame(
+    class = pg |> rvest::html_elements("div > ul > li:nth-child(1) > span") |> rvest::html_text2(),
+    value = pg |> rvest::html_elements("div > ul > li:nth-child(3) > span") |> rvest::html_text2()|> readr::parse_number()
+  )
+  Sys.sleep(1)   # robots.txt asks for it
+}
+registry = dplyr::bind_rows(pages)   # 400 rows?
+
+dreadnought_df = registry |> 
+  dplyr::filter(class == "Dreadnought")
+
+sum(dreadnought_df$value)
+```
+
