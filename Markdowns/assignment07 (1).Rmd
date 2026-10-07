@@ -1,0 +1,104 @@
+---
+title: "Assignment 07: Web Scraping the FSB Directory"
+author: "Ethan"
+date: "2026-10-06"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_download: true
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Department names
+dept_names = c(
+  "Accountancy",
+  "Economics",
+  "Entrepreneurship",
+  "Finance",
+  "Information Systems & Analytics",
+  "Marketing",
+  "Management"
+)
+
+# Department names as they appear in the FSB URLs
+dept_search = c(
+  "Accountancy",
+  "Economics",
+  "Entrepreneurship",
+  "Finance",
+  "Information%20Systems%20--%20Analytics",
+  "Marketing",
+  "Management"
+)
+
+# Function to scrape one department
+scrape_fsb = function(dept, search_name) {
+  
+  fsb_url = paste0(
+    "https://miamioh.edu/fsb/directory/?up=/query/all/all/",
+    search_name,
+    "/all"
+  )
+  
+  webpage = rvest::read_html(fsb_url)
+  
+  # Grab the rows in the directory table
+  rows = webpage |>
+    rvest::html_elements("table tr")
+  
+  # Keep only rows that contain table data
+  rows = rows |>
+    purrr::keep(
+      ~ length(rvest::html_elements(.x, "td")) >= 3
+    )
+  
+  # Pull information from each row
+  department_df = purrr::map_df(rows, function(row) {
+    
+    cells = row |>
+      rvest::html_elements("td")
+    
+    person_cell = cells[[3]]
+    
+    name = person_cell |>
+      rvest::html_element("a") |>
+      rvest::html_text2()
+    
+    website = person_cell |>
+      rvest::html_element("a") |>
+      rvest::html_attr("href")
+    
+    position = person_cell |>
+      rvest::html_text2() |>
+      stringr::str_remove(stringr::fixed(name)) |>
+      stringr::str_squish()
+    
+    data.frame(
+      department = dept,
+      name = name,
+      position = position,
+      website = website
+    )
+  })
+  
+  return(department_df)
+}
+
+# Scrape all seven departments into one data frame
+fsb_directory = purrr::map2_df(
+  .x = dept_names,
+  .y = dept_search,
+  .f = scrape_fsb
+)
+
+# Print the first few observations
+head(fsb_directory)
+```
+
